@@ -1,0 +1,141 @@
+<!--
+
+ * Created by PhpStorm.
+ * User: TJ 
+ * Date: 20/08/18
+ * Time: 03:00 PM
+ 
+-->
+
+<section class="page-sign-in user-entrance gen-form-div">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title">
+          <h2>{{pagedata.title}}</h2>
+          <p>{{pagedata.description}}
+        </div>
+      </div>
+      <!-- section title end -->
+    </div>
+    <!-- section title row end -->
+
+
+
+    <div class="row">
+      <div class="col-12 col-lg-12 mx-auto">
+
+        <ng-container *ngIf="formload">
+          <app-card-loader-component></app-card-loader-component>
+          <app-card-loader-component></app-card-loader-component>
+        </ng-container>
+
+        <ng-container *ngFor="let item of childcardlist let j = index;">
+          <div class="row" >
+            <div class="col-12 col-lg-12 mx-auto">
+              <div class="user-form">
+
+                <div class="myaccount-row-blk clearfix">
+                  <div class="add-child-div display-inlineblk1">
+                    <h3 class="display-left">{{item.full_name}}</h3>
+                    <a href="javascript:void(0)" title="Add Card" (click)="openDetail(item)" data-toggle="modal" data-target="#view-child">+ Add Card</a>
+                  </div>
+
+                  
+                    <div class="myaccount-row method-root clearfix" *ngIf="item.cards && item.cards.length >0 ">
+                      <div class="row">
+
+                        <div class="col-12 col-lg-12">
+                          <div class="payment-method-tbl">
+                            <div class="table-responsive clearfix">
+                              <table class="table" border="0" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                  <tr>
+                                    <th class="width-30p">Method</th>
+                                    <th class="width-20p">Number</th>
+                                    <th class="width-20p">Expires</th>
+                                    <th class="width-30p"> </th>
+                                  </tr>
+                                  <ng-container *ngFor="let card of item.cards let i = index;">
+                                  <tr>
+                                    <td>{{card.brand}} </td>
+                                    <td>{{card.number}}</td>
+                                    <td>{{card.exp_month_year}}</td>
+                                    <td>
+                                      <span class="span-general default-span" [class.background-self]="update_process==card.id" *ngIf="card.default ==1"> &nbsp; &nbsp;  Default &nbsp; </span>
+                                      <a href="javascript:void(0)" title="Make card default" *ngIf="card.default !=1" (click)="setDefault(card.id,item.id)">
+                                        <span class="span-general set-default-span" [class.background-self]="update_process==card.id">Set Default</span>
+                                      </a>
+                                      <a href="javascript:void(0)" (click)="deleteCard(card.id,item.id)" title="Remove Card">
+                                        <span class="remove">
+                                          <img src="assets/img/delete.svg" alt="" *ngIf="reomve_process!=card.id">
+                                          <img src="assets/img/loader.gif" alt="" *ngIf="reomve_process==card.id">
+                                        </span>
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </ng-container>
+
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+
+
+
+      </div>
+    </div>
+
+
+
+
+    <div class="modal fade" style=" margin-top:150px;" #fileInput id="view-child" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="pop-child-detail-div clearfix">
+
+              <div class="txt-div">
+                <h4 class="text-center">ADD CARD FOR CHILD</h4>
+                <p class="badge-txt text-center">{{userdetail.full_name}}</p>
+
+                <div class="pop-child-detail clearfix">
+                  <div class="container-fluid">
+                    <div class="form__field form__field--group">
+                      <div id="card-element" class="field"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-lg-12 mx-auto text-center ">
+                      <button  type="submit" class="btn__submit "  (click)="addcard()" [class.background-self]="formload_add" [class.disabled]="formload_add" [disabled]="formload_add" >ADD CARD </button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
